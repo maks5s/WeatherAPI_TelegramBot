@@ -37,4 +37,17 @@ def start(message):
     bot.reply_to(message, "Hello, I`m WeatherAPI_Bot. To find out the weather, please enter command \"/weather\"")
 
 
+@bot.message_handler(commands=['weather'])
+def ask_city(message):
+    msg = bot.reply_to(message, "Please enter the city name:")
+    bot.register_next_step_handler(msg, send_weather)
+
+
+def send_weather(message):
+    city_name = message.text
+    weather_text = get_weather(city_name)
+
+    bot.send_message(message.chat.id, f"The current weather details in {city_name}:\n\n{weather_text}")
+
+
 bot.infinity_polling()
