@@ -30,3 +30,11 @@ def get_weather(city_name):
         weather_text += f"Error: {weather_data['message']}"
 
     return weather_text
+
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.reply_to(message, "Hello, I`m WeatherAPI_Bot. To find out the weather, please enter command \"/weather\"")
+
+
+bot.infinity_polling()
