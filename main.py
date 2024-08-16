@@ -47,7 +47,16 @@ def send_weather(message):
     city_name = message.text
     weather_text = get_weather(city_name)
 
-    bot.send_message(message.chat.id, f"The current weather details in {city_name}:\n\n{weather_text}")
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    markup.add(types.KeyboardButton('Check another city'))
+
+    bot.send_message(message.chat.id, f"The current weather details in {city_name}:\n\n{weather_text}",
+                     reply_markup=markup)
+
+
+@bot.message_handler(func=lambda message: message.text == "Check another city")
+def check_another_city(message):
+    ask_city(message)
 
 
 bot.infinity_polling()
